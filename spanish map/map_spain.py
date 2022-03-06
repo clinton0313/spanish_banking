@@ -50,3 +50,5 @@ digitized = np.multiply.reduce(digitized, axis=2)
 fig, ax = plt.subplots(figsize=(16,16))
 ax.imshow(digitized, cmap="Greys")
 # %%
+# %%
+

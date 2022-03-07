@@ -77,7 +77,7 @@ array2shp(
     array=array, 
     outSHPfn=os.path.join(PROCESSEDPATH, SHAPE_FILE), 
     rasterfn=os.path.join(PROCESSEDPATH, CLIPPED_FN), 
-    pixelValue=255
+    pixelValue=255.
     )
 
 # %%

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
+import pyrosm
 import regex as re
 import rasterio as rio
 
@@ -16,6 +17,8 @@ os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 ADM_PATH = "ESP_adm"
 DATAPATH = "data"
+MAPPATH = os.path.join("maps", "processed")
+MAP = "trafico1960_clipped.tif"
 EPSG = 32630
 mainland_bounds = (-0.2e6, 1.5e6, 3.7e6, 5.1e6)
 
@@ -28,9 +31,12 @@ bank_data["geometry"] = bank_data.apply(lambda x: Point(x["LONGITUD_ETRS89"], x[
 bank_data = gpd.GeoDataFrame(data=bank_data, geometry="geometry", crs="ETRS89")
 bank_data = bank_data.to_crs(epsg=EPSG).cx[mainland_bounds[0]:mainland_bounds[1], mainland_bounds[2]:mainland_bounds[3]]
 adm_data = adm_data.to_crs(epsg=EPSG).cx[mainland_bounds[0]:mainland_bounds[1], mainland_bounds[2]:mainland_bounds[3]]
-bank_map = rio.open(os.path.join(DATAPATH, "spanish_map_digitized.tif"))
+bank_map = rio.open(os.path.join(MAPPATH, MAP))
 
-
+spain = adm_data.unary_union
+#%%
+osm = pyrosm.OSM(os.path.join(DATAPATH, "aragon-latest.osm.pbf"))
+modern_roads = osm.get_network(network_type="driving")
 
 # %%
 fig, ax = plt.subplots(figsize=(14,14))

@@ -14,28 +14,29 @@ from shapely.geometry import mapping, MultiPolygon
 from vectorize import gdf_to_graph, array2shp, raster2array, pixelOffset2coord, path_to_edges
 
 ADM_PATH = "ESP_adm"
-DATAPATH = "data"
+DATAPATH = "maps"
 PROCESSEDPATH = os.path.join(DATAPATH, "processed")
 EPSG = 32630
-CLIPPED_FN = "spanish_map_clipped.tif"
-DIGITIZED_FN = "spanish_map_digitized.tif"
-SHAPE_FILE = "spanish_map_vectorized.shp"
+MAP = "trafico1960"
+CLIPPED_FN = f"{MAP}_clipped.tif"
+DIGITIZED_FN = f"{MAP}_digitized.tif"
+SHAPE_FILE = f"{MAP}_vectorized.shp"
+PROJECTED_MAP = f"{MAP}_reprojected.tif"
 mainland_bounds = (-0.2e6, 1.5e6, 3.7e6, 5.1e6)
 
 #%%
 #Digitizing the map
 
-thresholds = [240., 240., 240.]
+thresholds = [220., 210., 160.]
 bins = [np.array([0., threshold]) for threshold in thresholds]
 
-bank_tif = gdal.Open(os.path.join(DATAPATH, "spanish_map_georeferenced_epsg32630.tif"), gdal.GA_ReadOnly)
+bank_tif = gdal.Open(os.path.join(DATAPATH, PROJECTED_MAP), gdal.GA_ReadOnly)
 bank_transform = bank_tif.GetGeoTransform()
 rasterbands = [bank_tif.GetRasterBand(i).ReadAsArray() for i in range(1,4)]
 
-#%%
 
 digitized_bands = [1 - (np.digitize(band, bins =bin ) - 1) for band, bin in zip(rasterbands, bins)]
-digitized = digitized_bands[0] * digitized_bands[1] * digitized_bands[2]
+digitized = ((digitized_bands[0] + digitized_bands[1] + digitized_bands[2]) > 1)
 digitized = np.float32(digitized) * 255
 
 fig, ax = plt.subplots(figsize=(26,26))
@@ -72,12 +73,12 @@ with rasterio.open(os.path.join(PROCESSEDPATH, CLIPPED_FN), "w", **out_meta) as 
     outfile.write(out_img)
 
 # %%
-array = raster2array(os.path.join(PROCESSEDPATH, CLIPPED_FN))
-array2shp(
-    array=array, 
-    outSHPfn=os.path.join(PROCESSEDPATH, SHAPE_FILE), 
-    rasterfn=os.path.join(PROCESSEDPATH, CLIPPED_FN), 
-    pixelValue=255.
-    )
+# array = raster2array(os.path.join(PROCESSEDPATH, CLIPPED_FN))
+# array2shp(
+#     array=array, 
+#     outSHPfn=os.path.join(PROCESSEDPATH, SHAPE_FILE), 
+#     rasterfn=os.path.join(PROCESSEDPATH, CLIPPED_FN), 
+#     pixelValue=255.
+#     )
 
 # %%

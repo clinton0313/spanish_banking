@@ -33,15 +33,19 @@ bank_data = bank_data.to_crs(epsg=EPSG).cx[mainland_bounds[0]:mainland_bounds[1]
 adm_data = adm_data.to_crs(epsg=EPSG).cx[mainland_bounds[0]:mainland_bounds[1], mainland_bounds[2]:mainland_bounds[3]]
 bank_map = rio.open(os.path.join(MAPPATH, MAP))
 
-spain = adm_data.unary_union
-#%%
-osm = pyrosm.OSM(os.path.join(DATAPATH, "aragon-latest.osm.pbf"))
-modern_roads = osm.get_network(network_type="driving")
-
 # %%
 fig, ax = plt.subplots(figsize=(14,14))
-show(bank_map, ax=ax)
-# adm_data.plot(ax=ax)
-# bank_data.plot(ax=ax, column="treatment", markersize=10, legend=True)
+# show(bank_map, ax=ax)
+adm_data.plot(ax=ax)
+bank_data.plot(ax=ax, column="treatment", markersize=10, legend=True)
 
 # %%
+year = 1968
+
+yearly_bank_data = bank_data[bank_data["year"] == year]
+
+yearly_fig, yearly_ax = plt.subplots(figsize=(16, 16))
+adm_data.plot(ax=yearly_ax)
+yearly_bank_data.plot(ax=yearly_ax, column="treatment", markersize=10, legend=True)
+# %%
+

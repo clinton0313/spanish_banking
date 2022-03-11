@@ -17,7 +17,7 @@ ADM_PATH = "ESP_adm"
 DATAPATH = "maps"
 PROCESSEDPATH = os.path.join(DATAPATH, "processed")
 EPSG = 32630
-MAP = "trafico1960"
+MAP = "trafico1975"
 CLIPPED_FN = f"{MAP}_clipped.tif"
 DIGITIZED_FN = f"{MAP}_digitized.tif"
 SHAPE_FILE = f"{MAP}_vectorized.shp"
@@ -27,7 +27,9 @@ mainland_bounds = (-0.2e6, 1.5e6, 3.7e6, 5.1e6)
 #%%
 #Digitizing the map
 
-thresholds = [220., 210., 160.]
+# thresholds = [220., 210., 160.] 1960 thresholds
+# thresholds = [200., 200., 170.] 1965 and 1970 thresholds
+thresholds = [200., 200., 160.]
 bins = [np.array([0., threshold]) for threshold in thresholds]
 
 bank_tif = gdal.Open(os.path.join(DATAPATH, PROJECTED_MAP), gdal.GA_ReadOnly)
@@ -35,9 +37,9 @@ bank_transform = bank_tif.GetGeoTransform()
 rasterbands = [bank_tif.GetRasterBand(i).ReadAsArray() for i in range(1,4)]
 
 
-digitized_bands = [1 - (np.digitize(band, bins =bin ) - 1) for band, bin in zip(rasterbands, bins)]
-digitized = ((digitized_bands[0] + digitized_bands[1] + digitized_bands[2]) > 1)
-digitized = np.float32(digitized) * 255
+digitized_bands = [(np.digitize(band, bins =bin ) - 1) for band, bin in zip(rasterbands, bins)]
+digitized = ((digitized_bands[0] + digitized_bands[1] + digitized_bands[2]) > 2)
+digitized = (1 - np.float32(digitized)) * 255
 
 fig, ax = plt.subplots(figsize=(26,26))
 ax.imshow(digitized, cmap="Greys")

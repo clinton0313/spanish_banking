@@ -1,0 +1,60 @@
+\begin{table}[H]
+
+\caption{\label{tab:apptable4}Matching estimators}
+\centering
+\begin{threeparttable}
+\begin{tabular}[t]{lcc}
+\toprule
+\multicolumn{1}{c}{\textit{Dependent Variable:}} & \multicolumn{2}{c}{Commercial Licenses, per 1000 inhab.} \\
+\cmidrule(l{3pt}r{3pt}){1-1} \cmidrule(l{3pt}r{3pt}){2-3}
+\multicolumn{1}{c}{ } & \multicolumn{1}{c}{Baseline Match} & \multicolumn{1}{c}{Stack \& Match} \\
+\cmidrule(l{3pt}r{3pt}){2-2} \cmidrule(l{3pt}r{3pt}){3-3}
+Year -5 & 0.03 & 0.11\\
+ & (0.20) & (0.34)\\
+Year -4 & -0.07 & 0.00\\
+ & (0.17) & (0.28)\\
+Year -3 & -0.02 & -0.02\\
+ & (0.14) & (0.19)\\
+Year -2 & -0.01 & -0.02\\
+ & (0.09) & (0.10)\\
+Year -1 (Omitted) & 0.00 & 0.00\\
+ & (0.00) & (0.00)\\
+Year 0 & 0.18 & -0.03\\
+ & (0.11) & (0.09)\\
+Year 1 & 0.35** & 0.03\\
+ & (0.15) & (0.14)\\
+Year 2 & 0.50*** & 0.11\\
+ & (0.17) & (0.18)\\
+Year 3 & 0.57*** & 0.16\\
+ & (0.19) & (0.20)\\
+Year 4 & 0.59*** & 0.24\\
+ & (0.21) & (0.22)\\
+Year 5 & 0.72*** & 0.46**\\
+ & (0.21) & (0.23)\\
+Year 6 & 0.85*** & 0.58**\\
+ & (0.23) & (0.26)\\
+Year 7 & 0.97*** & 0.60**\\
+ & (0.27) & (0.29)\\
+Year 8 & 1.01*** & 0.54\\
+ & (0.31) & (0.33)\\
+\midrule
+Demographic Controls & Yes & Yes\\
+Spatial Controls & Yes & Yes\\
+Economic Controls & Yes & Yes\\
+\midrule
+Municipality FE & Yes & No\\
+Year x Province FE & Yes & No\\
+Stack x Municipality FE & No & Yes\\
+Stack x Year FE & No & Yes\\
+Stack x Province FE & No & Yes\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[para]
+\item \footnotesize \textit{Note:} The table shows the author's estimation of equation (3) using subsets of matched control municipalities.
+      The first column uses propensity score matching to draw a sample of untreated municipalities with demographic, spatial and economic characteristics
+      that are closest to the treated municipalities. The second column repeats this process for each treatment group on the set of municipalities included
+      in the group. These are then stacked into a model with saturated fixed effects to account for the different datasets.  \\
+      ***, **, and * indicate significance at the 0.01, 0.05 and 0.10 levels, respectively, using two-tailed tests.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

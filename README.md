@@ -1,6 +1,6 @@
 # Spatial Analysis of Spanish Banking Expansion 
 
-To improve on David Ampudia's Economics research paper on the Banking Expansion of Spain, we emplyo spatial analysis and spatial regressions to provide more robust results. The paper abstract is below and the full paper can be read in Ampudia_Leung_Spatial_TermPaper.pdf
+To improve on David Ampudia's Economics research paper on the Banking Expansion of Spain, we emplyo spatial analysis and spatial regressions to provide more robust results. We do this by digitizing old Spanish maps to extract road network information as well as emplpy spatial regression on extracted spatial lag variables. The paper abstract is below and the full paper can be read in Ampudia_Leung_Spatial_TermPaper.pdf
 
 ### Abstract
 

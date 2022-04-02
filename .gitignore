@@ -1,2 +1,4 @@
 ESP_adm/
 data/*.pbf
+output_maps/
+maps/*

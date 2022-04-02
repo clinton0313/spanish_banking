@@ -73,6 +73,7 @@ out_meta["nodata"] = np.nan
 
 with rasterio.open(os.path.join(PROCESSEDPATH, CLIPPED_FN), "w", **out_meta) as outfile:
     outfile.write(out_img)
+outfile.close()
 
 # %%
 # array = raster2array(os.path.join(PROCESSEDPATH, CLIPPED_FN))
